@@ -11,7 +11,7 @@ test:
     MYSQL_USER: root
     MYSQL_PASSWORD: password
     TEST_OUTPUT_DIR: /reports
-  command: ["python","manage.py","test","todo.tests","--noinput"]
+  command: ["python","manage.py","test","api.tests","--noinput"]
 
 builder:
   build: ../../

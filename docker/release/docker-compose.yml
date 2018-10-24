@@ -8,7 +8,7 @@ app:
   environment: 
     DJANGO_SETTINGS_MODULE: restaurants_admin.settings.release
     MYSQL_HOST: db
-    MYSQL_USER: todo
+    MYSQL_USER: api
     MYSQL_PASSWORD: password
   command: 
     - uwsgi
@@ -23,7 +23,7 @@ test:
   links: 
     - nginx
   environment: 
-    URL: http://nginx:8000/todos
+    URL: http://nginx:8000/api
     JUNIT_REPORT_PATH: /reports/acceptance.xml
   command: --reporter mocha-jenkins-reporter
 
@@ -52,7 +52,7 @@ db:
     - "3306"
   environment: 
     MYSQL_DATABASE: restaurants_admin
-    MYSQL_USER: todo
+    MYSQL_USER: api
     MYSQL_PASSWORD: password
     MYSQL_ROOT_PASSWORD: password
 

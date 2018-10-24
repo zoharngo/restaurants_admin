@@ -21,7 +21,7 @@ class RestaurantsViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-    # Delete all todo items 
+    # Delete all restaurants 
     def delete(self, request):
         RestaurantModel.objects.all().delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

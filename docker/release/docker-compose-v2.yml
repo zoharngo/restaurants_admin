@@ -51,7 +51,7 @@ services:
     expose: 
       - "3306"
     environment: 
-      MYSQL_DATABASE: restaurants_admin
+      MYSQL_DATABASE: restaurants_db
       MYSQL_USER: api
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password

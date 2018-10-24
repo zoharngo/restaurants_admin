@@ -1,7 +1,7 @@
 # Project variables
-PROJECT_NAME ?= todobackend
+PROJECT_NAME ?= restaurants_admin
 ORG_NAME ?= 2251985
-REPO_NAME ?= todobackend
+REPO_NAME ?= restaurants_admin
 
 # Filenames
 DEV_COMPOSE_FILE := docker/dev/docker-compose.yml

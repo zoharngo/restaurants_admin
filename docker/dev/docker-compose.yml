@@ -6,7 +6,7 @@ test:
   links: 
     - db
   environment: 
-    DJANGO_SETTINGS_MODULE: todobackend.settings.test
+    DJANGO_SETTINGS_MODULE: restaurants_admin.settings.test
     MYSQL_HOST: db
     MYSQL_USER: root
     MYSQL_PASSWORD: password

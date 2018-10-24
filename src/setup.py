@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 setup(
-    name                 = "restaurants-api",
+    name                 = "restaurants_admin",
     version              = "0.1.0",
-    description          = "Restaurants-api Djnago REST service",
+    description          = "Restaurants Administrator Djnago REST service",
     packages              = find_packages(),
     include_package_data = True,
     scripts              = ["manage.py"],

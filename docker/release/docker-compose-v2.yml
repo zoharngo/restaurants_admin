@@ -12,22 +12,22 @@ services:
     links: 
       - db
     volumes: 
-      - webroot:/var/www/todobackend
+      - webroot:/var/www/restaurants_admin
     environment: 
-      DJANGO_SETTINGS_MODULE: todobackend.settings.release
+      DJANGO_SETTINGS_MODULE: restaurants_admin.settings.release
       MYSQL_HOST: db
       MYSQL_USER: todo
       MYSQL_PASSWORD: password
     command: 
       - uwsgi
-      - --socket /var/www/todobackend/todobackend.sock
+      - --socket /var/www/restaurants_admin/restaurants_admin.sock
       - --chmod-socket=666
-      - --module todobackend.wsgi
+      - --module restaurants_admin.wsgi
       - --master
       - --die-on-term
 
   test:
-    image: 2251985/todobackend-specs
+    image: 2251985/restaurants_admin-specs
     links: 
       - nginx
     environment: 
@@ -44,14 +44,14 @@ services:
     ports: 
       - "8000:8000"
     volumes: 
-      - webroot:/var/www/todobackend
+      - webroot:/var/www/restaurants_admin
 
   db:
     image: mysql:5.6
     expose: 
       - "3306"
     environment: 
-      MYSQL_DATABASE: todobackend
+      MYSQL_DATABASE: restaurants_admin
       MYSQL_USER: todo
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password

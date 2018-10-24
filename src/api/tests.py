@@ -18,9 +18,6 @@ class TestCreateRestaurant(APITestCase):
     def setUp(self):
         self.response = createRestaurant(self.client)
 
-    def test_received_location_header_hyperlink(self):
-       self.assertRegexpMatches("/".join([url,RestaurantModel.objects.get().uuid]),'^/api/(.*?)')
-
     def test_received_201_created_status_code(self):   
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
 

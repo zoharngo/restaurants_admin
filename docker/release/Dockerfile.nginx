@@ -2,4 +2,4 @@ FROM nginx
 MAINTAINER Zohar Nyego <zoharngo@gmail.com>
 
 # Copy configuration file
-COPY todobackend.conf /etc/nginx/conf.d/todobackend.conf
+COPY restaurants_admin.conf /etc/nginx/conf.d/restaurants_admin.conf

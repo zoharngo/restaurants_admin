@@ -5,13 +5,11 @@ from rest_framework.test import APITestCase
 from api.models import RestaurantModel
 
 
+url = reverse('restaurantmodel-list')
 
-def createRestaurant(client):
-    url = reverse('restaurantmodel-list')
-    print 'url',url
+def createRestaurant(client):   
     data = [{'restaurant_name' : 'TOGO'}]
     return client.post(url, data, format='json')
-
 
 class TestCreateRestaurant(APITestCase):
     """
@@ -19,6 +17,9 @@ class TestCreateRestaurant(APITestCase):
     """
     def setUp(self):
         self.response = createRestaurant(self.client)
+
+    def test_received_location_header_hyperlink(self):
+       self.assertRegexpMatches("/".join([url,RestaurantModel.objects.get().uuid]),'^/api/(.*?)')
 
     def test_received_201_created_status_code(self):   
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
@@ -35,11 +36,10 @@ class TestsUpdateRestaurant(APITestCase):
     """
 
     def setUp(self):
-        response = createRestaurant(self.client)
+        createRestaurant(self.client)
         self.assertEqual(RestaurantModel.objects.get().restaurant_name, 'TOGO')
-        url = response['Location']
         data = {'restaurant_name': 'TOGO', 'restaurant_type': 'grill'}
-        self.response = self.client.put(url, data, format='json')
+        self.response = self.client.put("/".join([url,RestaurantModel.objects.get().uuid]), data, format='json')
     
     def test_received_200_created_status_code(self):
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)
@@ -53,11 +53,10 @@ class TestsPatchRestaurant(APITestCase):
     """
 
     def setUp(self):
-        response = createRestaurant(self.client)
+        createRestaurant(self.client)
         self.assertEqual(RestaurantModel.objects.get().restaurant_name, 'TOGO')
-        url = response['Location']
         data = {'restaurant_name': 'hadson', 'phone': "(+972) 050 - 4945555" }
-        self.response = self.client.patch(url, data, format='json')
+        self.response = self.client.patch("/".join([url,RestaurantModel.objects.get().uuid]), data, format='json')
     
     def test_received_200_created_status_code(self):
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)
@@ -72,10 +71,9 @@ class TestsDeleteRestaurantItem(APITestCase):
     """
 
     def setUp(self):
-        response = createRestaurant(self.client)
+        createRestaurant(self.client)
         self.assertEqual(RestaurantModel.objects.count(), 1)
-        url = response['Location']
-        self.response = self.client.delete(url)
+        self.response = self.client.delete("/".join([url,RestaurantModel.objects.get().uuid]))
 
     def test_received_204_no_content_status_code(self):
         self.assertEqual(self.response.status_code, status.HTTP_204_NO_CONTENT)

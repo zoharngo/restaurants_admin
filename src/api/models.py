@@ -17,7 +17,7 @@ class UUIDModel(models.Model):
 
 class Location(models.Model):
     objects = models.Manager()
-    coordinates = models.CharField(primary_key=True ,max_length=256 ,editable=False, null = False)
+    coordinates = models.CharField(primary_key=True ,max_length=64 ,editable=False, null = False)
     address = models.CharField(max_length=256, null=True , blank = True)
 
 class RestaurantModel(UUIDModel):

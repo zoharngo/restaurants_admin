@@ -1,14 +1,18 @@
-
 from django.core.urlresolvers import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from api.models import RestaurantModel
 
-
 url = reverse('restaurantmodel-list')
 
 def createRestaurant(client):   
-    data = [{'restaurant_name' : 'TOGO'}]
+    data = [{'restaurant_name' : 'Hudson',
+             'restaurant_type' : 'Grill',
+             'phone' : '+(972) 3644 4733',
+             'location': {
+			    'coordinates': '32.109805/34.840232',
+			    'address': ''}
+            }]
     return client.post(url, data, format='json')
 
 class TestCreateRestaurant(APITestCase):
@@ -25,7 +29,7 @@ class TestCreateRestaurant(APITestCase):
         self.assertEqual(RestaurantModel.objects.count(), 1)
 
     def test_restaurant_has_correct_name(self):
-        self.assertEqual(RestaurantModel.objects.get().restaurant_name, 'TOGO')
+        self.assertEqual(RestaurantModel.objects.get().restaurant_name, 'Hudson')
 
 class TestsUpdateRestaurant(APITestCase):
     """
@@ -34,15 +38,15 @@ class TestsUpdateRestaurant(APITestCase):
 
     def setUp(self):
         createRestaurant(self.client)
-        self.assertEqual(RestaurantModel.objects.get().restaurant_name, 'TOGO')
-        data = {'restaurant_name': 'TOGO', 'restaurant_type': 'grill'}
+        self.assertEqual(RestaurantModel.objects.get().restaurant_name, 'Hudson')
+        data = {'restaurant_name': 'Humongous', 'restaurant_type': 'Burger'}
         self.response = self.client.put("/".join([url,RestaurantModel.objects.get().uuid]), data, format='json')
     
     def test_received_200_created_status_code(self):
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)
 
     def test_restaurant_was_updated(self):
-        self.assertEqual(RestaurantModel.objects.get().restaurant_type, 'grill')
+        self.assertEqual(RestaurantModel.objects.get().restaurant_type, 'Burger')
 
 class TestsPatchRestaurant(APITestCase):
     """
@@ -51,15 +55,15 @@ class TestsPatchRestaurant(APITestCase):
 
     def setUp(self):
         createRestaurant(self.client)
-        self.assertEqual(RestaurantModel.objects.get().restaurant_name, 'TOGO')
-        data = {'restaurant_name': 'hadson', 'phone': "(+972) 050 - 4945555" }
+        self.assertEqual(RestaurantModel.objects.get().restaurant_name, 'Hudson')
+        data = {'restaurant_name': 'Humongous', 'phone': "(+972) 050 - 4945555" }
         self.response = self.client.patch("/".join([url,RestaurantModel.objects.get().uuid]), data, format='json')
     
     def test_received_200_created_status_code(self):
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)
 
     def test_restaurant_was_updated(self):
-        self.assertEqual(RestaurantModel.objects.get().restaurant_name, 'hadson')
+        self.assertEqual(RestaurantModel.objects.get().restaurant_name, 'Humongous')
         self.assertEqual(RestaurantModel.objects.get().phone, "(+972) 050 - 4945555")
 
 class TestsDeleteRestaurantItem(APITestCase):
@@ -87,8 +91,7 @@ class TestsDeleteAllRestaurants(APITestCase):
 
     def setUp(self):
         createRestaurant(self.client)
-        createRestaurant(self.client)
-        self.assertEqual(RestaurantModel.objects.count(), 2)
+        self.assertEqual(RestaurantModel.objects.count(), 1)
         self.response = self.client.delete(reverse('restaurantmodel-list'))
 
     def test_received_204_no_content_status_code(self):

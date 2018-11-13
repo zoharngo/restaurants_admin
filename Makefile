@@ -53,8 +53,8 @@ test:
 	${INFO} "Pull lastest images..."
 	@ docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) pull
 	${INFO} "Building images..."
-	@ docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) build --pull test
-	${INFO} "Strarting up agent service..."
+	@ docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) build test
+	${INFO} "Starting up agent service..."
 	@ docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) up agent
 	${INFO} "Download and install test requirements and running unit tests..."
 	@ docker-compose -p $(DEV_PROJECT) -f $(DEV_COMPOSE_FILE) up test	
@@ -78,7 +78,7 @@ release:
 	${INFO} "Building images..."
 	@ docker-compose -p $(REL_PROJECT) -f $(REL_COMPOSE_FILE) build app
 	@ docker-compose -p $(REL_PROJECT) -f $(REL_COMPOSE_FILE) build --pull nginx	
-	${INFO} "Strarting up agent service..."
+	${INFO} "Starting up agent service..."
 	@ docker-compose -p $(REL_PROJECT) -f $(REL_COMPOSE_FILE) up agent
 	${INFO} "Collecting static files..."
 	@ docker-compose -p $(REL_PROJECT) -f $(REL_COMPOSE_FILE) run --rm app manage.py collectstatic --no-input 

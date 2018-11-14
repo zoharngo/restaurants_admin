@@ -23,6 +23,9 @@ services:
       MYSQL_PASSWORD: password
       TEST_OUTPUT_DIR: /reports
     command: ["python","manage.py","test","api.tests","--noinput"]
+    depends_on:
+     - db
+    restart: always
   
   builder:
     build: 

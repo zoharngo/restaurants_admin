@@ -59,3 +59,12 @@ services:
       MYSQL_USER: api
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
+
+  agent:
+    image: 2251985/docker-ansible
+    links: 
+      - db
+    environment: 
+      PROBE_HOST: db
+      PROBE_PORT: "3306"
+    command: ["probe.yml"]

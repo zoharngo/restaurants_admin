@@ -25,6 +25,9 @@ services:
       - --module restaurants_admin.wsgi
       - --master
       - --die-on-term
+    depends_on:
+     - db
+    restart: always
 
   test:
     image: 2251985/restaurants_admin-specs

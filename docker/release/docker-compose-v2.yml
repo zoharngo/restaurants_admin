@@ -15,6 +15,7 @@ services:
       - webroot:/var/www/restaurants_admin
     environment: 
       DJANGO_SETTINGS_MODULE: restaurants_admin.settings.release
+      MYSQL_DATABASE: restaurants_db
       MYSQL_HOST: db
       MYSQL_USER: api
       MYSQL_PASSWORD: password

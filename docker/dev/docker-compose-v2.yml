@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 volumes: 
   build: 
@@ -15,7 +15,7 @@ services:
       - cache:/cache
       - build:/build
     links: 
-      - db
+      - "db:database"
     environment: 
       DJANGO_SETTINGS_MODULE: restaurants_admin.settings.test
       MYSQL_HOST: db
@@ -36,7 +36,7 @@ services:
   agent:
     image: 2251985/docker-ansible
     links: 
-      - db
+      - "db:database"
     environment: 
       PROBE_HOST: db
       PROBE_PORT: "3306"
@@ -45,8 +45,8 @@ services:
   db:
     image: mysql:5.6
     hostname: db
-    expose: 
-      - "3306"
+    ports: 
+      - "3306:3306"
     environment: 
       MYSQL_ROOT_PASSWORD: password
 
